@@ -345,7 +345,7 @@ function InnerFlowCellLim(xIn, yIn, xOut, yOut, Scaler, OutFCPoss, CanvasCenterX
     text(OuterFCStr.concat('Sheath - ', OutAng2.toFixed(1), 'º | Silica - ', InAng2.toFixed(1), 'º'), InputX + 45, 295)
   } else {
     textStyle(BOLD)
-    text('Outer Flow Cell Dimensions Unknown', InputX + 45, 254)
+    text('Outer Flow Cell Dimensions Unknown', InputX + 45, 295)
 
   }
 
