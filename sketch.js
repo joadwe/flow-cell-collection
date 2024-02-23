@@ -369,9 +369,9 @@ function InnerFlowCellLim(xIn, yIn, xOut, yOut, Scaler, OutFCPoss, CanvasCenterX
   }
   
   const halfAngleInDegrees = MinAng1.toFixed(1);
-  const totalLightOutput = 100; // Example value, replace with the actual light output
+  const totalLightOutput = 50; // Example value, replace with the actual light output
   
-  const lightCollected = calculateLightCollection(halfAngleInDegrees, totalLightOutput);
+  const lightCollected = calculateLightCollection(halfAngleInDegrees*2, totalLightOutput);
   text(CollectionPercent.concat(lightCollected.toFixed(1), '%'), InputX, 400)
   
   if (InFCcheckbox.checked()) {
