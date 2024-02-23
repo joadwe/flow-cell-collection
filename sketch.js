@@ -355,6 +355,25 @@ function InnerFlowCellLim(xIn, yIn, xOut, yOut, Scaler, OutFCPoss, CanvasCenterX
   textStyle(BOLD)
   text(SystemAngStr.concat('Sheath - ', MinAng1.toFixed(1), 'º | Silica - ', MinAng2.toFixed(1), 'º'), InputX, 370)
 
+  var CollectionPercent = 'Fluorescence collection = ';
+
+  function degreesToRadians(degrees) {
+    return degrees * Math.PI / 180;
+  }
+  
+  function calculateLightCollection(angleInDegrees, totalLight) {
+      const angleInRadians = degreesToRadians(angleInDegrees);
+      const solidAngle = 2 * Math.PI * (1 - Math.cos(angleInRadians));
+      const fraction = solidAngle / (4 * Math.PI);
+      return totalLight * fraction;
+  }
+  
+  const halfAngleInDegrees = MinAng1.toFixed(1);
+  const totalLightOutput = 100; // Example value, replace with the actual light output
+  
+  const lightCollected = calculateLightCollection(halfAngleInDegrees, totalLightOutput);
+  text(CollectionPercent.concat(lightCollected.toFixed(1), '%'), InputX, 400)
+  
   if (InFCcheckbox.checked()) {
 
     // plot inner flow cell collection angle to cuvette    
