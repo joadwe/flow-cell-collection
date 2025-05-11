@@ -3,139 +3,67 @@ var InputX = 10
 var ElementX = InputX + 70
 var CanvasXSpacer = 390
 var CanvasYSpacer = 10
+function createLabeledInput(label, defaultValue, y, parent, onInput) {
+  const input = createInput(defaultValue);
+  input.position(InputX, y);
+  input.input(onInput);
+  input.size(50);
+  input.parent(parent);
+
+  const labelElem = createElement('p1', label);
+  labelElem.position(ElementX, y);
+  labelElem.parent(parent);
+
+  return input;
+}
 
 function setup() {
+  const parentId = "sketchContainer";
 
   var cnv1 = createCanvas(840, 400);
-  cnv1.parent("sketchContainer");
+  cnv1.parent(parentId);
   cnv1.style('display', 'block');
 
   // Cytometer preset selection
   sel = createSelect();
-  sel.parent("sketchContainer");
-
-  sel.position(InputX, 5
-              );
-  sel.option('Attune NxT');
-  sel.option('Aria');
-  sel.option('Calibur');
-  sel.option('Canto');
-  sel.option('Canto II');
-  sel.option('CytoFlex');
-  sel.option('Fortessa');
-  sel.option('Gallios');
-  sel.option('Navios');
-  sel.option('Custom')
+  sel.parent(parentId);
+  sel.position(InputX, 5);
+  [
+    'Attune NxT', 'Aria', 'Calibur', 'Canto', 'Canto II',
+    'CytoFlex', 'Fortessa', 'Gallios', 'Navios', 'Custom'
+  ].forEach(opt => sel.option(opt));
   sel.changed(myCheckedEvent);
 
   CytPresettext = createElement('p1', 'Flow Cytometer Presets');
   CytPresettext.position(ElementX + 35, 5);
-  CytPresettext.parent("sketchContainer");
+  CytPresettext.parent(parentId);
 
-  //   NA aperture input box
-  NAinput = createInput('1.2');
-  NAinput.position(InputX, 30);
-  NAinput.input(draw);
-  NAinput.size(50)
-  NAinput.parent("sketchContainer");
+  // Inputs and labels
+  NAinput = createLabeledInput('Lens Numerical Aperture', '1.2', 30, parentId, draw);
+  FCInXinput = createLabeledInput('Inner Flow Cell Width (µm)', '250', 60, parentId, draw);
+  FCInYinput = createLabeledInput('Inner Flow Cell Depth (µm)', '250', 90, parentId, draw);
+  FCOutXinput = createLabeledInput('Outer Flow Cell Width (µm)', '6000', 120, parentId, draw);
+  FCOutYinput = createLabeledInput('Outer Flow Cell Depth (µm)', '6000', 150, parentId, draw);
+  Laminput = createLabeledInput('Illumination Wavelength (nm)', '488', 180, parentId, draw);
+  SheathRIinput = createLabeledInput('Water Refractive Index', '', 210, parentId, draw);
+  FlowCellRIinput = createLabeledInput('Fused Silica Refractive Index', '', 240, parentId, draw);
 
-  NAinputtext = createElement('p1', 'Lens Numerical Aperture');
-  NAinputtext.position(ElementX, 30);
-  NAinputtext.parent("sketchContainer");
-
-  //   Inner flow cell width input box
-  FCInXinput = createInput('250');
-  FCInXinput.position(InputX, 60);
-  FCInXinput.input(draw);
-  FCInXinput.size(50)
-  FCInXinput.parent("sketchContainer");
-
-  FCInXinputtext = createElement('p1', 'Inner Flow Cell Width (µm)');
-  FCInXinputtext.position(ElementX, 60);
-  FCInXinputtext.parent("sketchContainer");
-
-  //   Inner flow cell depth input box
-  FCInYinput = createInput('250');
-  FCInYinput.position(InputX, 90);
-  FCInYinput.input(draw);
-  FCInYinput.size(50)
-  FCInYinput.parent("sketchContainer");
-
-  FCInYinputtext = createElement('p1', 'Inner Flow Cell Depth (µm)');
-  FCInYinputtext.position(ElementX, 90);
-  FCInYinputtext.parent("sketchContainer");
-
-  //   Outer flow cell width input box
-  FCOutXinput = createInput('6000');
-  FCOutXinput.position(InputX, 120);
-  FCOutXinput.input(draw);
-  FCOutXinput.size(50)
-  FCOutXinput.parent("sketchContainer");
-
-  FCOutXinputtext = createElement('p1', 'Outer Flow Cell Width (µm)');
-  FCOutXinputtext.position(ElementX, 122);
-  FCOutXinputtext.parent("sketchContainer");
-
-  //   Outer flow cell depth input box
-  FCOutYinput = createInput('6000');
-  FCOutYinput.position(InputX, 150);
-  FCOutYinput.input(draw);
-  FCOutYinput.size(50)
-  FCOutYinput.parent("sketchContainer");
-
-  FCOutYinputtext = createElement('p1', 'Outer Flow Cell Depth (µm)');
-  FCOutYinputtext.position(ElementX, 152);
-  FCOutYinputtext.parent("sketchContainer");
-
-  //   Wavelength box
-  Laminput = createInput('488');
-  Laminput.position(InputX, 180);
-  Laminput.input(draw);
-  Laminput.size(50)
-  Laminput.parent("sketchContainer");
-
-  Laminputtext = createElement('p1', 'Illumination Wavelength (nm)');
-  Laminputtext.position(ElementX, 182);
-  Laminputtext.parent("sketchContainer");
-
-  //   Sheath RI box
-  SheathRIinput = createInput('');
-  SheathRIinput.position(InputX, 210);
-  SheathRIinput.input(draw);
-  SheathRIinput.size(50)
-  SheathRIinput.parent("sketchContainer");
-
-  SheathRIinputtext = createElement('p1', 'Water Refractive Index');
-  SheathRIinputtext.position(ElementX, 212);
-  SheathRIinputtext.parent("sketchContainer");
-
-  //   Flow Cell RI box
-  FlowCellRIinput = createInput('');
-  FlowCellRIinput.position(InputX, 240);
-  FlowCellRIinput.input(draw);
-  FlowCellRIinput.size(50)
-  FlowCellRIinput.parent("sketchContainer");
-
-  FlowCellRIinputtext = createElement('p1', 'Fused Silica Refractive Index');
-  FlowCellRIinputtext.position(ElementX, 242);
-  FlowCellRIinputtext.parent("sketchContainer");
-
+  // Checkboxes
   OutFCcheckbox = createCheckbox('', true);
   OutFCcheckbox.position(InputX, 280);
   OutFCcheckbox.changed(draw);
-  OutFCcheckbox.parent("sketchContainer");
+  OutFCcheckbox.parent(parentId);
 
   InFCcheckbox = createCheckbox('', true);
   InFCcheckbox.position(InputX, 300);
   InFCcheckbox.changed(draw);
-  InFCcheckbox.parent("sketchContainer");
+  InFCcheckbox.parent(parentId);
 
   Lenscheckbox = createCheckbox('', true);
   Lenscheckbox.position(InputX, 320);
   Lenscheckbox.changed(draw);
-    Lenscheckbox.parent("sketchContainer");
-
-} // end of function
+  Lenscheckbox.parent(parentId);
+}
 
 function myCheckedEvent() {
   if (sel.value() == 'Custom') {
@@ -152,134 +80,83 @@ function myCheckedEvent() {
   draw()
 
 } // end of function
+const cytometerPresets = {
+  'CytoFlex':   { xIn: 420, yIn: 160, xOut: 7000, yOut: 6000, NumAp: 1.3, OutFCPoss: false },
+  'Attune NxT': { xIn: 200, yIn: 200, xOut: 6000, yOut: 4000, NumAp: 1.2, OutFCPoss: true  },
+  'Calibur':    { xIn: 430, yIn: 180, xOut: 7000, yOut: 6500, NumAp: 1.2, OutFCPoss: true  },
+  'Aria':       { xIn: 250, yIn: 160, xOut: 6000, yOut: 4000, NumAp: 1.2, OutFCPoss: false },
+  'Canto':      { xIn: 430, yIn: 180, xOut: 7000, yOut: 6500, NumAp: 1.2, OutFCPoss: true  },
+  'Canto II':   { xIn: 430, yIn: 180, xOut: 7000, yOut: 6500, NumAp: 1.2, OutFCPoss: true  },
+  'Fortessa':   { xIn: 430, yIn: 180, xOut: 7000, yOut: 6500, NumAp: 1.2, OutFCPoss: true  },
+  'Gallios':    { xIn: 460, yIn: 150, xOut: 7000, yOut: 6500, NumAp: 1.2, OutFCPoss: false },
+  'Navios':     { xIn: 460, yIn: 150, xOut: 7000, yOut: 6500, NumAp: 1.2, OutFCPoss: false }
+};
+
+function getPresetValues(preset, scaler) {
+  if (cytometerPresets[preset]) {
+    const p = cytometerPresets[preset];
+    return {
+      xIn: p.xIn * scaler,
+      yIn: p.yIn * scaler,
+      xOut: p.xOut * scaler,
+      yOut: p.yOut * scaler,
+      NumAp: p.NumAp,
+      OutFCPoss: p.OutFCPoss
+    };
+  }
+  // Custom
+  return {
+    xIn: FCInXinput.value() * scaler,
+    yIn: FCInYinput.value() * scaler,
+    xOut: FCOutXinput.value() * scaler,
+    yOut: FCOutYinput.value() * scaler,
+    NumAp: NAinput.value(),
+    OutFCPoss: true
+  };
+}
+
 
 function draw() {
+  clear();
 
-  clear()
+  const scaler = 6 / 100;
+  Medium_RI();
+  FlowCell_RI();
 
-  var Scaler = 6 / 100
+  const preset = sel.value();
+  const { xIn, yIn, xOut, yOut, NumAp, OutFCPoss } = getPresetValues(preset, scaler);
 
-  Medium_RI()
-  FlowCell_RI()
-
-  if (sel.value() == 'CytoFlex') {
-    var xIn = 420 * Scaler
-    var yIn = 160 * Scaler
-    var xOut = 7000 * Scaler
-    var yOut = 6000 * Scaler
-    var NumAp = 1.3
-    var OutFCPoss = false
-
-    OutFCcheckbox.checked(false)
-
-  } else if (sel.value() == 'Attune NxT') {
-    var xIn = 200 * Scaler
-    var yIn = 200 * Scaler
-    var xOut = 6000 * Scaler
-    var yOut = 4000 * Scaler
-    var NumAp = 1.2
-    var OutFCPoss = true
-
-  } else if (sel.value() == 'Calibur') {
-    var xIn = 430 * Scaler
-    var yIn = 180 * Scaler
-    var xOut = 7000 * Scaler
-    var yOut = 6500 * Scaler
-    var NumAp = 1.2
-    var OutFCPoss = true
-
-  } else if (sel.value() == 'Aria') {
-    var xIn = 160 * Scaler
-    var yIn = 250 * Scaler
-    var xOut = 6000 * Scaler
-    var yOut = 4000 * Scaler
-    var NumAp = 1.2
-    var OutFCPoss = false
-
-    OutFCcheckbox.checked(false)
-
-  } else if (sel.value() == 'Canto') {
-    var xIn = 430 * Scaler
-    var yIn = 180 * Scaler
-    var xOut = 7000 * Scaler
-    var yOut = 6500 * Scaler
-    var NumAp = 1.2
-    var OutFCPoss = true
-
-  } else if (sel.value() == 'Canto II') {
-    var xIn = 430 * Scaler
-    var yIn = 180 * Scaler
-    var xOut = 7000 * Scaler
-    var yOut = 6500 * Scaler
-    var NumAp = 1.2
-    var OutFCPoss = true
-
-  } else if (sel.value() == 'Fortessa') {
-    var xIn = 430 * Scaler
-    var yIn = 180 * Scaler
-    var xOut = 7000 * Scaler
-    var yOut = 6500 * Scaler
-    var NumAp = 1.2
-    var OutFCPoss = true
-
-  } else if (sel.value() == 'Gallios') {
-    var xIn = 460 * Scaler
-    var yIn = 150 * Scaler
-    var xOut = 7000 * Scaler
-    var yOut = 6500 * Scaler
-    var NumAp = 1.2
-    var OutFCPoss = false
-
-    OutFCcheckbox.checked(false)
-
-  } else if (sel.value() == 'Navios') {
-    var xIn = 460 * Scaler
-    var yIn = 150 * Scaler
-    var xOut = 7000 * Scaler
-    var yOut = 6500 * Scaler
-    var NumAp = 1.2
-    var OutFCPoss = false
-
-    OutFCcheckbox.checked(false)
-
-  } else if (sel.value() == 'Custom') {
-    var xIn = FCInXinput.value() * Scaler
-    var yIn = FCInYinput.value() * Scaler
-    var xOut = FCOutXinput.value() * Scaler
-    var yOut = FCOutYinput.value() * Scaler
-    var NumAp = NAinput.value()
-    var OutFCPoss = true
+  // Handle OutFCcheckbox for presets that require it off
+  if (cytometerPresets[preset] && !cytometerPresets[preset].OutFCPoss) {
+    OutFCcheckbox.checked(false);
   }
 
-  if (sel.value() == 'Custom') {
-
-  } else {
-    FCInXinput.value(xIn / Scaler)
-    FCInYinput.value(yIn / Scaler)
-    FCOutXinput.value(xOut / Scaler)
-    FCOutYinput.value(yOut / Scaler)
-    NAinput.value(NumAp)
+  // Sync UI inputs with preset values (except for Custom)
+  if (preset !== 'Custom') {
+    FCInXinput.value(xIn / scaler);
+    FCInYinput.value(yIn / scaler);
+    FCOutXinput.value(xOut / scaler);
+    FCOutYinput.value(yOut / scaler);
+    NAinput.value(NumAp);
   }
 
   var CanvasCenterX = CanvasXSpacer + xOut / 2;
   var CanvasCenterY = CanvasYSpacer + yOut / 2;
 
   rectMode(CENTER);
-  fill(220, 220, 220)
-  rect(CanvasCenterX, CanvasCenterY, xOut, yOut)
-  fill(255)
-  rect(CanvasCenterX, CanvasCenterY, xIn, yIn)
+  fill(220, 220, 220);
+  rect(CanvasCenterX, CanvasCenterY, xOut, yOut);
+  fill(255);
+  rect(CanvasCenterX, CanvasCenterY, xIn, yIn);
 
-  OuterFlowCellLim(xIn, yIn, xOut, yOut, CanvasCenterX, CanvasCenterY)
+  OuterFlowCellLim(xIn, yIn, xOut, yOut, CanvasCenterX, CanvasCenterY);
 
   if (OutFCcheckbox.checked()) {
-
-    fill(255, 255, 190, 255 / 3)
-    quad(Data[0], Data[1], Data[2], Data[3], Data[4], Data[5], Data[6], Data[7])
-  } else { }
-  InnerFlowCellLim(xIn, yIn, xOut, yOut, Scaler, OutFCPoss, CanvasCenterX, CanvasCenterY)
-
-} // end of function
+    fill(255, 255, 190, 255 / 3);
+    quad(Data[0], Data[1], Data[2], Data[3], Data[4], Data[5], Data[6], Data[7]);
+  }
+  InnerFlowCellLim(xIn, yIn, xOut, yOut, scaler, OutFCPoss, CanvasCenterX, CanvasCenterY);
+}
 
 function OuterFlowCellLim(xIn, yIn, xOut, yOut, CanvasCenterX, CanvasCenterY) {
 
