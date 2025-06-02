@@ -1,16 +1,126 @@
-<!DOCTYPE html><html><head>
-  <script src="p5.js"></script>
-  <script src="p5.dom.min.js"></script>
-  <script src="p5.sound.min.js"></script>
-  <script src="sketch.js"></script>
-
-  <link rel="stylesheet" type="text/css" href="style.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="utf-8">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flow Cell Collection Simulator</title>
+  <script src="p5.js"></script>
+  <script src="sketch.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-  <div id="sketchContainer"></div>
+  <div class="container">
+    <header>
+      <h1>Flow Cell Collection Simulator</h1>
+    </header>
+    
+    <div id="sketchContainer" class="sketch-container"></div>
+    
+    <div class="controls-container">
+      <div class="control-section">
+        <h3>Flow Cytometer Settings</h3>
+        
+        <div class="control-group">
+          <label for="cytometer-preset">Flow Cytometer Presets</label>
+          <select id="cytometer-preset" class="modern-select">
+            <option value="Attune NxT">Attune NxT</option>
+            <option value="Aria">Aria</option>
+            <option value="Calibur">Calibur</option>
+            <option value="Canto">Canto</option>
+            <option value="Canto II">Canto II</option>
+            <option value="CytoFlex">CytoFlex</option>
+            <option value="Fortessa">Fortessa</option>
+            <option value="Gallios">Gallios</option>
+            <option value="Navios">Navios</option>
+            <option value="Custom">Custom</option>
+          </select>
+        </div>
+      </div>
 
+      <div class="control-section">
+        <h3>Physical Parameters</h3>
+        
+        <div class="input-grid">
+          <div class="control-group">
+            <label for="na-input">Lens Numerical Aperture</label>
+            <input type="number" id="na-input" class="modern-input" value="1.2" step="0.1" min="0">
+          </div>
+          
+          <div class="control-group">
+            <label for="fc-in-x">Inner Flow Cell Width (µm)</label>
+            <input type="number" id="fc-in-x" class="modern-input" value="250" step="1" min="0">
+          </div>
+          
+          <div class="control-group">
+            <label for="fc-in-y">Inner Flow Cell Depth (µm)</label>
+            <input type="number" id="fc-in-y" class="modern-input" value="250" step="1" min="0">
+          </div>
+          
+          <div class="control-group">
+            <label for="fc-out-x">Outer Flow Cell Width (µm)</label>
+            <input type="number" id="fc-out-x" class="modern-input" value="6000" step="1" min="0">
+          </div>
+          
+          <div class="control-group">
+            <label for="fc-out-y">Outer Flow Cell Depth (µm)</label>
+            <input type="number" id="fc-out-y" class="modern-input" value="6000" step="1" min="0">
+          </div>
+          
+          <div class="control-group">
+            <label for="wavelength">Illumination Wavelength (nm)</label>
+            <input type="number" id="wavelength" class="modern-input" value="488" step="1" min="200" max="800">
+          </div>
+          
+          <div class="control-group">
+            <label for="sheath-ri">Water Refractive Index</label>
+            <input type="number" id="sheath-ri" class="modern-input" step="0.0001" readonly>
+          </div>
+          
+          <div class="control-group">
+            <label for="flowcell-ri">Fused Silica Refractive Index</label>
+            <input type="number" id="flowcell-ri" class="modern-input" step="0.0001" readonly>
+          </div>
+        </div>
+      </div>
 
-</body></html>
+      <div class="control-section">
+        <h3>Display Options</h3>
+        
+        <div class="checkbox-grid">
+          <div class="control-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="outer-fc-checkbox" checked>
+              <span class="checkmark" style="background-color: rgba(255, 255, 190, 0.7);"></span>
+              Outer Flow Cell Half-Angle
+            </label>
+          </div>
+          
+          <div class="control-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="inner-fc-checkbox" checked>
+              <span class="checkmark" style="background-color: rgba(255, 150, 150, 0.7);"></span>
+              Inner Flow Cell Half-Angle
+            </label>
+          </div>
+          
+          <div class="control-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="lens-checkbox" checked>
+              <span class="checkmark" style="background-color: rgba(150, 100, 150, 0.7);"></span>
+              Lens Limited Half-Angle
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-section">
+        <h3>Results</h3>
+        <div id="results-display" class="results-display">
+          <!-- Results will be displayed here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
